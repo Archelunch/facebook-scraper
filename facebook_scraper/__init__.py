@@ -8,7 +8,7 @@ from .facebook_scraper import FacebookScraper
 from .fb_types import Post
 
 
-_scraper = FacebookScraper()
+scraper = FacebookScraper()
 
 
 def get_posts(
@@ -36,7 +36,7 @@ def get_posts(
     if valid_args != 1:
         raise ValueError("You need to specify either account or group")
 
-    _scraper.requests_kwargs['timeout'] = kwargs.pop('timeout', DEFAULT_REQUESTS_TIMEOUT)
+    scraper.requests_kwargs['timeout'] = kwargs.pop('timeout', DEFAULT_REQUESTS_TIMEOUT)
 
     options = kwargs.setdefault('options', set())
 
@@ -50,13 +50,13 @@ def get_posts(
         options.add('reactions')
 
     if credentials is not None:
-        _scraper.login(*credentials)
+        scraper.login(*credentials)
 
     if account is not None:
-        return _scraper.get_posts(account, **kwargs)
+        return scraper.get_posts(account, **kwargs)
 
     elif group is not None:
-        return _scraper.get_group_posts(group, **kwargs)
+        return scraper.get_group_posts(group, **kwargs)
 
 
 def write_posts_to_csv(
